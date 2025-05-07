@@ -22,6 +22,18 @@ namespace PWA1.Controllers
         {
             return View();
         }
+        public IActionResult MiCuenta()
+        {
+            return View();
+        }
+        public IActionResult SobreNosotros()
+        {
+            return View();
+        }
+        public IActionResult Reseñas()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
