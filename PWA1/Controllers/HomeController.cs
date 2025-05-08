@@ -35,7 +35,50 @@ namespace PWA1.Controllers
             return View();
         }
 
-       
+
+        private List<Reseña> ObtenerReseñas()
+        {
+            return new List<Reseña>
+            {
+                new Reseña
+            {
+                    Id = 1,
+                    titulo = "Los mejores auriculares",
+                    imagen = "/imag/auriculares.png",
+                    detalle="Son considerados por muchos como los mejores en cancelación de ruido actualmente, además de ofrecer un sonido excelente y un diseño cómodo.",
+                    usuario="RCORIA"
+
+            },
+                  new Reseña
+            {
+                    Id = 2,
+                    titulo = "Los mejores laptop",
+                    imagen = "/imag/Laptop.png",
+                    detalle="Son considerados por muchos como los mejores en cancelación de ruido actualmente, además de ofrecer un sonido excelente y un diseño cómodo.",
+                    usuario="RCORIA"
+
+            }, new Reseña
+            {
+                    Id = 3,
+                    titulo = "Los mejores net",
+                    imagen = "/imag/net.png",
+                    detalle="Son considerados por muchos como los mejores en cancelación de ruido actualmente, además de ofrecer un sonido excelente y un diseño cómodo.",
+                    usuario="RCORIA"
+
+            },  new Reseña
+            {
+                    Id = 4,
+                    titulo = "Los mejores smatwatch",
+                    imagen = "/imag/smartwatch.png",
+                    detalle="Son considerados por muchos como los mejores en cancelación de ruido actualmente, además de ofrecer un sonido excelente y un diseño cómodo.",
+                    usuario="RCORIA"
+
+            }
+
+
+            };
+            
+        }
 
 
         public IActionResult Registrar()
