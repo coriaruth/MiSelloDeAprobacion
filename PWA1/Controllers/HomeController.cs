@@ -15,7 +15,19 @@ namespace PWA1.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            Usuario usuario = new Usuario();
+            var resenias = ObtenerReseñas().Take(4).ToList();
+
+            var modelo = new PorfolioVM()
+            {
+                usuario = usuario,
+                resenias = resenias
+
+            };
+
+
+            return View(modelo);
+
         }
 
         public IActionResult Privacy()
