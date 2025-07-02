@@ -167,7 +167,27 @@ namespace PWA1.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        public IActionResult Top()
+        {
+            var reseñasTop = _DbContext.Reseñas
+                .Include(r => r.Usuario)
+                .Include(r => r.Categoria)
+                .Include(r => r.Subcategoria)
+                .Where(r => r.PuntuacionCalidad == 5
+                         && r.PuntuacionPrecio == 5
+                         && r.PuntuacionDurabilidad == 5)
+                .OrderByDescending(r => r.FechaReseña)
+                .ToList();
+
+            return View(reseñasTop);
+        }
     }
+
+
+
+
 }
 
 

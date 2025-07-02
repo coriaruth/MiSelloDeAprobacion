@@ -1,0 +1,38 @@
+﻿@model IEnumerable<PWA1.Models.Reseña>
+
+@{
+    ViewData["Title"] = "Top Reseñas";
+}
+
+<h1 class="mb-4">Reseñas con Puntuación Perfecta</h1>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var reseña in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <img src="@reseña.ImagenRuta" class="card-img-top" style="height:200px;object-fit:cover;" alt="Imagen de reseña" />
+                    <div class="card-body">
+                        <h5 class="card-title">@reseña.Titulo</h5>
+                        <p class="card-text">@reseña.Contenido</p>
+                        <p><strong>Categoría:</strong> @reseña.Categoria?.Nombre</p>
+                        <p><strong>Autor:</strong> @reseña.Usuario?.Nombre</p>
+                        <p>
+                            <strong>Calidad:</strong> @reseña.PuntuacionCalidad |
+                            <strong>Precio:</strong> @reseña.PuntuacionPrecio |
+                            <strong>Durabilidad:</strong> @reseña.PuntuacionDurabilidad
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        No hay reseñas con puntuación perfecta.
+    </div>
+}
