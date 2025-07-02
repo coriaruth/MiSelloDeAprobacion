@@ -1,9 +1,33 @@
-﻿@model string
-
+﻿@model IEnumerable<PWA1.Models.Reseña>
 
 @{
-    ViewData["Title"] = Model;
+    ViewData["Title"] = "Para Visitar";
 }
 
-<h1>ParaVisitar</h1>
+<h1>Para Visitar</h1>
 
+@if (Model != null && Model.Any())
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var reseña in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <img src="@reseña.ImagenRuta" class="card-img-top" alt="Imagen reseña">
+                    <div class="card-body">
+                        <h5 class="card-title">@reseña.Titulo</h5>
+                        <p class="card-text">@reseña.Contenido</p>
+                        <p><strong>Autor:</strong> @reseña.Usuario?.Nombre</p>
+                        <p><strong>Subcategoría:</strong> @reseña.Subcategoria?.Nombre</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        No hay reseñas en esta categoría.
+    </div>
+}
