@@ -4,21 +4,29 @@
     ViewData["Title"] = "Hogar";
 }
 
-<h1>Hogar</h1>
+<h1 class="mb-4">Hogar</h1>
 
 @if (Model != null && Model.Any())
 {
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
         @foreach (var reseña in Model)
         {
-            <div class="col">
-                <div class="card h-100">
-                    <img src="@reseña.ImagenRuta" class="card-img-top" alt="Imagen reseña">
-                    <div class="card-body">
+            <div class="col d-flex">
+                <div class="card flex-fill h-100">
+                    <img src="@reseña.ImagenRuta"
+                         class="card-img-top img-fluid"
+                         style="object-fit: cover; height: 200px;"
+                         alt="Imagen reseña">
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title">@reseña.Titulo</h5>
                         <p class="card-text">@reseña.Contenido</p>
                         <p><strong>Autor:</strong> @reseña.Usuario?.Nombre</p>
                         <p><strong>Subcategoría:</strong> @reseña.Subcategoria?.Nombre</p>
+                        <ul class="list-unstyled mb-0">
+                            <li><strong>Calidad:</strong> @reseña.PuntuacionCalidad</li>
+                            <li><strong>Precio:</strong> @reseña.PuntuacionPrecio</li>
+                            <li><strong>Durabilidad:</strong> @reseña.PuntuacionDurabilidad</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -31,7 +39,3 @@ else
         No hay reseñas en esta categoría.
     </div>
 }
-
-
-
-
