@@ -73,7 +73,6 @@ namespace PWA1.Controllers
                 Email = email,
                 Contraseña = contraseña,
                 FechaRegistro = DateTime.Now,
-               
                 Pais = pais,
                 Sexo = sexo
             };
@@ -82,7 +81,7 @@ namespace PWA1.Controllers
             _DbContext.SaveChanges();
 
             ViewBag.RegistroExitoso = true;
-            return View();
+            return RedirectToAction("MiCuenta");
         }
 
         public IActionResult MiCuenta()
@@ -104,14 +103,53 @@ namespace PWA1.Controllers
 
             if (user != null)
             {
+                // Guarda en sesión el nombre
                 HttpContext.Session.SetString("Usuario", user.Nombre);
-                return RedirectToAction("Index");
+
+                // Guarda también el ID del usuario (ESTO ES CLAVE para ReseniasController)
+                HttpContext.Session.SetInt32("UsuarioId", user.UsuarioId);
+
+                // Redirige a la acción Usuario
+                return RedirectToAction("Usuario");
             }
             else
             {
                 ViewBag.Error = "Usuario o contraseña incorrectos.";
                 return View();
             }
+        }
+
+        public IActionResult Usuario()
+        {
+            var nombreUsuario = HttpContext.Session.GetString("Usuario");
+
+            if (string.IsNullOrEmpty(nombreUsuario))
+            {
+                // Si no hay usuario logueado, vuelve a MiCuenta para login
+                return RedirectToAction("MiCuenta");
+            }
+
+            // Busca el usuario en base
+            var usuario = _DbContext.Usuarios
+                .FirstOrDefault(u => u.Nombre == nombreUsuario);
+
+            if (usuario == null)
+            {
+                // Usuario no encontrado
+                return RedirectToAction("MiCuenta");
+            }
+
+            // Cargar reseñas del usuario
+            var reseñasUsuario = _DbContext.Reseñas
+                .Include(r => r.Categoria)
+                .Include(r => r.Subcategoria)
+                .Where(r => r.UsuarioId == usuario.UsuarioId)
+                .OrderByDescending(r => r.FechaReseña)
+                .ToList();
+
+            ViewBag.Usuario = usuario.Nombre;
+
+            return View(reseñasUsuario);
         }
 
         private List<Reseña> ObtenerReseñas()
@@ -131,4 +169,7 @@ namespace PWA1.Controllers
         }
     }
 }
+
+
+
 

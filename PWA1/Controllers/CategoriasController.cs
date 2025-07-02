@@ -1,25 +1,65 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PWA1.Models;
 
 namespace PWA1.Controllers
 {
     public class CategoriasController : Controller
     {
+        private readonly PwaContext _context;
+
+        public CategoriasController(PwaContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Hogar()
         {
-            return View("Hogar","Para el Hogar");
+            var resenias = _context.Reseñas
+                .Include(r => r.Usuario)
+                .Include(r => r.Categoria)
+                .Where(r => r.Categoria.Nombre == "Hogar")
+                .OrderByDescending(r => r.FechaReseña)
+                .ToList();
+
+            return View("CategoriaResenias", resenias);
         }
 
         public IActionResult ParaVisitar()
         {
-            return View("ParaVisitar", "Para Visitar");
+            var resenias = _context.Reseñas
+                .Include(r => r.Usuario)
+                .Include(r => r.Categoria)
+                .Where(r => r.Categoria.Nombre == "Para Visitar")
+                .OrderByDescending(r => r.FechaReseña)
+                .ToList();
+
+            return View("CategoriaResenias", resenias);
         }
+
         public IActionResult Restaurante()
         {
-            return View("Restaurantes", "Para Conocer");
+            var resenias = _context.Reseñas
+                .Include(r => r.Usuario)
+                .Include(r => r.Categoria)
+                .Where(r => r.Categoria.Nombre == "Restaurantes")
+                .OrderByDescending(r => r.FechaReseña)
+                .ToList();
+
+            return View("CategoriaResenias", resenias);
         }
+
         public IActionResult Tecnologia()
         {
-            return View("Tecnologia", "Para Cambiar");
+            var resenias = _context.Reseñas
+                .Include(r => r.Usuario)
+                .Include(r => r.Categoria)
+                .Where(r => r.Categoria.Nombre == "Tecnología")
+                .OrderByDescending(r => r.FechaReseña)
+                .ToList();
+
+            return View("CategoriaResenias", resenias);
         }
     }
 }
+

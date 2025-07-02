@@ -1,0 +1,90 @@
+﻿@model PWA1.Models.Reseña
+
+@{
+    ViewData["Title"] = "Editar Reseña";
+}
+
+<div class="container my-4 pb-5">
+    <h2 class="mb-4 text-center text-md-start">Editar Reseña</h2>
+
+    <form asp-action="EditarR" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ReseñaId" />
+
+        <div class="row g-3">
+            <div class="col-12">
+                <label class="form-label">Título</label>
+                <input asp-for="Titulo" class="form-control" required />
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Contenido</label>
+                <textarea asp-for="Contenido" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label class="form-label">Categoría</label>
+                <select asp-for="CategoriaId" class="form-select" asp-items="ViewBag.Categorias">
+                    <option value="">-- Seleccione --</option>
+                </select>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label class="form-label">Subcategoría</label>
+                <select asp-for="SubcategoriaId" class="form-select" asp-items="ViewBag.Subcategorias">
+                    <option value="">-- Seleccione --</option>
+                </select>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label class="form-label">Puntuación de Calidad (1-5)</label>
+                <input asp-for="PuntuacionCalidad" class="form-control" type="number" min="1" max="5" required />
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label class="form-label">Puntuación de Precio (1-5)</label>
+                <input asp-for="PuntuacionPrecio" class="form-control" type="number" min="1" max="5" required />
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label class="form-label">Puntuación de Durabilidad (1-5)</label>
+                <input asp-for="PuntuacionDurabilidad" class="form-control" type="number" min="1" max="5" required />
+            </div>
+
+            <div class="col-12 text-center">
+                <label class="form-label mt-3">Imagen actual:</label><br />
+                @if (!string.IsNullOrEmpty(Model.ImagenRuta))
+                {
+                    <img src="@Model.ImagenRuta"
+                         alt="Imagen reseña"
+                         class="img-thumbnail mb-2"
+                         style="max-height:150px; max-width:100%;" />
+                }
+                else
+                {
+                    <span class="text-muted">No hay imagen subida.</span>
+                }
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Subir nueva imagen (opcional):</label>
+                <input type="file" name="imagen" class="form-control" />
+            </div>
+
+            <div class="col-12 d-flex flex-column flex-md-row justify-content-md-center gap-2 mt-4 mb-5">
+                <button type="submit" class="btn btn-success w-100 w-md-auto">
+                    Guardar Cambios
+                </button>
+                <a asp-action="Usuario" asp-controller="Home" class="btn btn-secondary w-100 w-md-auto">
+                    Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+

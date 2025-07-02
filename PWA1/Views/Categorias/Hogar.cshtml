@@ -1,11 +1,42 @@
-﻿@model string
-
+﻿@model IEnumerable<PWA1.Models.Reseña>
 
 @{
-    ViewData["Title"] = Model;
+    ViewData["Title"] = "Hogar";
 }
 
-<h1>Hogar</h1>
+<div class="text-center my-4">
+    <h1 class="display-5">Reseñas de Hogar</h1>
+    <p class="text-muted">Explora experiencias sobre productos y servicios para el hogar.</p>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var resenia in Model)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="@resenia.ImagenRuta" alt="Imagen reseña" class="card-img-top imagen-fija" />
+                        <div class="card-body">
+                            <h5 class="card-title">@resenia.Titulo</h5>
+                            <p class="card-text">@resenia.Contenido</p>
+                            <p class="mb-0"><strong>Autor:</strong> @resenia.Usuario?.Nombre</p>
+                            <p><strong>Fecha:</strong> @resenia.FechaReseña?.ToString("dd/MM/yyyy")</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center mt-4">
+        No hay reseñas en esta categoría.
+    </div>
+}
+
 
 
 
