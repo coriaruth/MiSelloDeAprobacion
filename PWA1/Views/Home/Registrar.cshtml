@@ -1,45 +1,51 @@
 ﻿@{
     ViewData["Title"] = "Registrar";
+    var mostrarToast = ViewBag.RegistroExitoso != null && (bool)ViewBag.RegistroExitoso;
 }
 
 <div>
     <h2 class="mb-4 text-center">Registrar</h2>
-    <form id="formRe" class="formulario-anchoText">
-        <ul class="list-unstyled">
 
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger text-center">@ViewBag.Error</div>
+    }
+
+    <form asp-controller="Home" asp-action="Registrar" method="post" id="formRe" class="formulario-anchoText">
+        <ul class="list-unstyled">
             <li>
                 <div class="col">
                     <label class="form-label">Usuario:</label>
-                    <input type="text" class="form-control" />
+                    <input type="text" name="nombre" class="form-control" required />
                 </div>
             </li>
 
             <li class="mt-3">
                 <div class="col">
                     <label class="form-label">Correo de recuperación:</label>
-                    <input type="text" class="form-control" />
+                    <input type="email" name="email" class="form-control" required />
                 </div>
             </li>
 
             <li class="mt-3">
                 <div class="col">
                     <label class="form-label">Contraseña:</label>
-                    <input type="password" class="form-control" />
+                    <input type="password" name="contraseña" class="form-control" required />
                 </div>
             </li>
 
             <li class="mt-4">
                 <div class="col">
                     <label class="form-label">País:</label>
-                    <select class="form-select">
-                        <option selected>Seleccionar País</option>
-                        <option value="1">Argentina</option>
-                        <option value="2">Brasil</option>
-                        <option value="3">Chile</option>
-                        <option value="4">Colombia</option>
-                        <option value="5">Uruguay</option>
-                        <option value="6">EEUU</option>
-                        <option value="7">Canadá</option>
+                    <select name="pais" class="form-select">
+                        <option value="">Seleccionar País</option>
+                        <option>Argentina</option>
+                        <option>Brasil</option>
+                        <option>Chile</option>
+                        <option>Colombia</option>
+                        <option>Uruguay</option>
+                        <option>EEUU</option>
+                        <option>Canadá</option>
                     </select>
                 </div>
             </li>
@@ -59,40 +65,39 @@
             </li>
 
             <li class="mt-4 text-center">
-            
-                <button type="button" class="btn btn-primary" onclick="EjecutarAlerta()">Registrar</button>
+                <button type="submit" class="btn btn-primary">Registrar</button>
             </li>
-
         </ul>
     </form>
 </div>
-
 
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11;">
     <div id="miToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <strong class="me-auto">Registro Exitoso</strong>
             <small>Hace unos segundos</small>
-            <button type="submit" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">
-            Tu usuario ha sido guardado.
+            Tu usuario ha sido guardado correctamente.
         </div>
     </div>
 </div>
 
 @section Scripts {
-
     <script>
-        function EjecutarAlerta() {
-            var ejemplo = document.getElementById('miToast');
-            var toast = new bootstrap.Toast(ejemplo);
-            toast.show();
+        window.onload = function () {
+            var mostrarToast = @Html.Raw(mostrarToast.ToString().ToLower());
+            if (mostrarToast) {
+                var ejemplo = document.getElementById('miToast');
+                var toast = new bootstrap.Toast(ejemplo);
+                toast.show();
 
-     
-            var fo = document.getElementById('formRe');
-            fo.reset();
-        }
+                var fo = document.getElementById('formRe');
+                fo.reset();
+                    }
+                };
     </script>
 }
+
 

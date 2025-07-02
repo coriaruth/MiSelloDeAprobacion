@@ -1,5 +1,4 @@
-﻿ @model PWA1.Models.PorfolioVM
-
+﻿@model PWA1.Models.PorfolioVM
 
 @{
     ViewData["Title"] = "Home Page";
@@ -16,14 +15,12 @@
             <option value="mejor">Mejor puntuado</option>
         </select>
     </div>
-    
 
     <div style="margin-top: 110px; margin-bottom: 90px;">
-        @if (Model.resenias is not null)
+        @if (Model.resenias is not null && Model.resenias.Any())
         {
             <div class="text-center">
                 <h1>Reseñas Recientes</h1>
-
             </div>
             <div class="container">
                 <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -31,24 +28,28 @@
                     {
                         <div class="col">
                             <div class="card h-100">
-                                <img src="@resenia.imagen" class="card-img-top imagen-fija" alt="imagen resenia" />
+                                <img src="@resenia.ImagenRuta" class="card-img-top imagen-fija" alt="imagen reseña" />
                                 <div class="card-body">
-                                    <h2 class="card-title">@resenia.titulo</h2>
-                                    <!---  <p class="card-text">resenia.detalle</p> --->
+                                    <h2 class="card-title">@resenia.Titulo</h2>
+                                    <p class="card-text">@resenia.Contenido</p>
+                                    <p><strong>Autor:</strong> @resenia.Usuario?.Nombre</p>
+                                    <p><strong>Categoría:</strong> @resenia.Categoria?.Nombre</p>
                                 </div>
-                                
                             </div>
                         </div>
                     }
                 </div>
             </div>
         }
-
+        else
+        {
+            <div class="alert alert-info">
+                No hay reseñas disponibles.
+            </div>
+        }
     </div>
+</div>
 
-  
-   
- </div>
 
 
 
