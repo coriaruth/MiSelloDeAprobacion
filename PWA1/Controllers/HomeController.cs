@@ -19,7 +19,7 @@ namespace PWA1.Controllers
             Usuario usuario = new Usuario();
 
             var resenias = ObtenerReseñas()
-                .Take(4)
+                .Take(20)
                 .ToList();
 
             var modelo = new PorfolioVM()

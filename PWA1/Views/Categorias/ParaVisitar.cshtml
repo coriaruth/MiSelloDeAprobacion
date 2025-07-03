@@ -2,16 +2,34 @@
 
 @{
     ViewData["Title"] = "Para Visitar";
+
+    var subcategorias = Model
+        .Where(r => r.Subcategoria != null)
+        .Select(r => r.Subcategoria.Nombre)
+        .Distinct()
+        .OrderBy(s => s)
+        .ToList();
 }
 
 <h1 class="mb-4">Para Visitar</h1>
 
 @if (Model != null && Model.Any())
 {
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="mb-3 d-flex justify-content-end align-items-center">
+        <label for="subcatFiltro" class="form-label me-2">Filtrar por subcategoría:</label>
+        <select id="subcatFiltro" class="form-select w-auto">
+            <option value="">Todas</option>
+            @foreach (var sub in subcategorias)
+            {
+                <option value="@sub">@sub</option>
+            }
+        </select>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="contenedorResenias">
         @foreach (var reseña in Model)
         {
-            <div class="col d-flex">
+            <div class="col d-flex reseña-card" data-subcategoria="@reseña.Subcategoria?.Nombre">
                 <div class="card flex-fill h-100">
                     <img src="@reseña.ImagenRuta"
                          class="card-img-top img-fluid"
@@ -38,5 +56,23 @@ else
     <div class="alert alert-info">
         No hay reseñas en esta categoría.
     </div>
+}
+
+@section Scripts {
+    <script>
+        const filtro = document.getElementById('subcatFiltro');
+        const tarjetas = document.querySelectorAll('.reseña-card');
+
+        filtro.addEventListener('change', function() {
+            const seleccion = this.value;
+            tarjetas.forEach(card => {
+                if (!seleccion || card.dataset.subcategoria === seleccion) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 }
 

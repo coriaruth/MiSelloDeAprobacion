@@ -9,11 +9,8 @@
     <p>Opiniones reales, decisiones inteligentes.</p>
 
     <div class="mb-3 d-flex justify-content-end align-items-center">
-        <label for="filtro" class="form-label text-end me-2">Filtrar por:</label>
-        <select id="filtro" class="form-select w-25 text-end">
-            <option value="todos">Todos</option>
-            <option value="mejor">Mejor puntuado</option>
-        </select>
+        <label for="busquedaTitulo" class="form-label text-end me-2">Buscar por título:</label>
+        <input id="busquedaTitulo" type="text" class="form-control w-25" placeholder="Escribe un título..." />
     </div>
 
     <div style="margin-top: 110px; margin-bottom: 90px;">
@@ -23,10 +20,10 @@
                 <h1>Reseñas Recientes</h1>
             </div>
             <div class="container">
-                <div class="row row-cols-1 row-cols-md-4 g-4">
+                <div class="row row-cols-1 row-cols-md-4 g-4" id="contenedorResenias">
                     @foreach (var resenia in Model.resenias)
                     {
-                        <div class="col">
+                        <div class="col reseña-item" data-titulo="@resenia.Titulo.ToLower()">
                             <div class="card h-100">
                                 <img src="@resenia.ImagenRuta" class="card-img-top imagen-fija" alt="imagen reseña" />
                                 <div class="card-body">
@@ -49,6 +46,25 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.getElementById("busquedaTitulo").addEventListener("input", function() {
+            var filtro = this.value.toLowerCase();
+            var tarjetas = document.querySelectorAll("#contenedorResenias .reseña-item");
+
+            tarjetas.forEach(function(tarjeta) {
+                var titulo = tarjeta.dataset.titulo;
+                if (titulo.includes(filtro)) {
+                    tarjeta.style.display = "block";
+                } else {
+                    tarjeta.style.display = "none";
+                }
+            });
+        });
+    </script>
+}
+
 
 
 
